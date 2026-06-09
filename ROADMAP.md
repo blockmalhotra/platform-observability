@@ -1,2 +1,2 @@
 # ROADMAP
-- Add more dashboards
+- Add panels

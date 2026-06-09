@@ -1,4 +1,6 @@
-global: {scrape_interval: 15s}
+global:
+  scrape_interval: 15s
 scrape_configs:
   - job_name: 'obs'
-    static_configs: [{targets: ['prometheus:9090']}]
+    static_configs:
+      - targets: ['prometheus:9090']

@@ -1,2 +1,2 @@
 # CONTRIBUTING
-PRs to main.
+PRs welcome.

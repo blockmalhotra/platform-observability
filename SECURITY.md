@@ -1,2 +1,2 @@
 # SECURITY
-No secrets exposed.
+No secrets.
