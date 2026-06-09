@@ -1,6 +1,10 @@
 # platform-observability
 
+<p align="center">
+
 **Production-inspired Blockchain Infrastructure Observability Stack demonstrating Prometheus, Loki, Tempo, Grafana, Alertmanager, and unified metrics/logs/traces patterns.**
+
+</p>
 
 ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&logoColor=white)
 ![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)
@@ -33,7 +37,7 @@ Pre-configured Docker Compose stack for blockchain nodes and services: Prometheu
 - [Operational Lessons Learned](#operational-lessons-learned)
 - [Screenshots](#screenshots)
 - [Roadmap](#roadmap)
-- [Business Value](#business-value)
+- [Business Impact](#business-impact)
 - [Resume Relevance](#resume-relevance)
 - [License](#license)
 
