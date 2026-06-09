@@ -1,28 +1,55 @@
 # platform-observability
 
-Blockchain infrastructure observability stack delivering unified metrics, logs, and traces using Prometheus, Loki, Tempo, Grafana, and Alertmanager for reliable detection and response.
+**Production-inspired Blockchain Infrastructure Observability Stack demonstrating Prometheus, Loki, Tempo, Grafana, Alertmanager, and unified metrics/logs/traces patterns.**
 
-![MIT License](https://img.shields.io/badge/license-MIT-green)
 ![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?logo=prometheus&logoColor=white)
 ![Grafana](https://img.shields.io/badge/Grafana-F46800?logo=grafana&logoColor=white)
-![Loki](https://img.shields.io/badge/Loki-F46800?logo=grafana&logoColor=white)
-![Tempo](https://img.shields.io/badge/Tempo-F46800?logo=grafana&logoColor=white)
+![Loki](https://img.shields.io/badge/Loki-F46800?logo=grafana)
+![Tempo](https://img.shields.io/badge/Tempo-F46800?logo=grafana)
+![Alertmanager](https://img.shields.io/badge/Alertmanager-E6522C)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?logo=kubernetes&logoColor=white)
-![Status](https://img.shields.io/badge/status-in--progress-orange)
-![Version](https://img.shields.io/badge/version-v0.1.0--in--progress-blue)
+![DevOps](https://img.shields.io/badge/DevOps-2496ED)
+![MIT License](https://img.shields.io/badge/license-MIT-green)
+![Status: In Progress](https://img.shields.io/badge/status-in--progress-orange)
+![Version: v0.1.0-in-progress](https://img.shields.io/badge/version-v0.1.0--in--progress-blue)
 
-**Overview** | [Architecture](#architecture) | [Features](#features) | [Deployment](#deployment) | [Monitoring](#monitoring) | [Security](#security) | [Screenshots](#screenshots)
+## Professional Summary
+
+Pre-configured Docker Compose stack for blockchain nodes and services: Prometheus (metrics + scrape), Loki (logs), Tempo (traces), Grafana (unified dashboards), Alertmanager. Volume mounts and prometheus.yml for local prod-like setup. Patterns extend to Kubernetes. Demonstrates full-signal observability for validators, RPC, and supporting infrastructure.
+
+## Table of Contents
+
+- [Problem Statement](#problem-statement)
+- [Why This Exists](#why-this-exists)
+- [Solution Overview](#solution-overview)
+- [Key Features](#key-features)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Repository Structure](#repository-structure)
+- [Deployment Workflow](#deployment-workflow)
+- [Monitoring & Observability](#monitoring--observability)
+- [Security Considerations](#security-considerations)
+- [Operational Lessons Learned](#operational-lessons-learned)
+- [Screenshots](#screenshots)
+- [Roadmap](#roadmap)
+- [Business Value](#business-value)
+- [Resume Relevance](#resume-relevance)
+- [License](#license)
 
 ## Problem Statement
 
 Blockchain nodes and supporting services generate high-volume metrics, logs, and traces. Without unified collection and visualization, operators cannot correlate issues across layers, detect anomalies early, or maintain SLAs for validators and RPC endpoints.
 
-## Solution
+## Why This Exists
 
-Pre-configured Docker Compose stack wires Prometheus (metrics + scrape), Loki (logs), Tempo (traces), Grafana (unified dashboards), and Alertmanager. Volume mounts and prometheus.yml provide production-like local setup. Patterns extend to Kubernetes deployments.
+Node operators and RPC providers need reliable signals for uptime, performance, and errors. Siloed tools (metrics only or logs only) slow incident response. This provides a ready-to-run reference for full-signal observability in blockchain infrastructure.
 
-## Features
+## Solution Overview
+
+Compose wires Prometheus with custom scrape (prometheus.yml), Grafana, Loki, Tempo, and Alertmanager. Volume mounts for config and data. Self-monitoring + unified UI. Kubernetes deployment patterns in docs for production.
+
+## Key Features
 
 - Prometheus with custom scrape config (prometheus.yml)
 - Grafana with admin default and datasource wiring
@@ -31,15 +58,6 @@ Pre-configured Docker Compose stack wires Prometheus (metrics + scrape), Loki (l
 - Alertmanager integration
 - Docker Compose local demo with persistence
 - Kubernetes deployment patterns and runbooks
-
-## Technology Stack
-
-- **Metrics**: Prometheus
-- **Logs**: Loki
-- **Traces**: Tempo
-- **Dashboards/Alerts**: Grafana + Alertmanager
-- **Packaging**: Docker, Compose
-- **Orchestration**: Kubernetes (patterns in docs)
 
 ## Architecture
 
@@ -62,20 +80,14 @@ graph TD
 - **Monitoring**: Self-scraping + unified Grafana UI across signals + Alertmanager
 - **Deployment flow**: `docker compose up`; k8s manifests or Helm in production
 
-<details>
-<summary>Show observability-stack.mmd</summary>
+## Technology Stack
 
-```mermaid
-graph TD
-    S[Services] --> P[Prom]
-    S --> L[Loki]
-    S --> T[Tempo]
-    P --> G[Grafana]
-    L --> G
-    T --> G
-    G --> A[Alertmanager]
-```
-</details>
+- **Metrics**: Prometheus
+- **Logs**: Loki
+- **Traces**: Tempo
+- **Dashboards/Alerts**: Grafana + Alertmanager
+- **Packaging**: Docker, Compose
+- **Orchestration**: Kubernetes (patterns in docs)
 
 ## Repository Structure
 
@@ -92,6 +104,36 @@ platform-observability/
 └── ROADMAP.md
 ```
 
+## Deployment Workflow
+
+```bash
+git clone https://github.com/blockmalhotra/platform-observability
+cd platform-observability
+docker compose up
+# Grafana: http://localhost:3000 (admin / admin)
+```
+
+See docs/runbook.md for production k8s patterns.
+
+## Monitoring & Observability
+
+- Prometheus scrapes targets via prometheus.yml
+- Grafana unifies metrics, logs (Loki), traces (Tempo)
+- Alertmanager routes alerts from rules
+- Self-monitoring of the stack
+
+## Security Considerations
+
+- No real credentials in compose (admin default for demo only)
+- Volume mounts limit scope
+- See SECURITY.md and docs for RBAC/secrets patterns in k8s
+
+## Operational Lessons Learned
+
+- Volume mounts for config (prometheus.yml) and data essential for reproducible local vs prod parity.
+- Unified Grafana view across metrics/logs/traces reduces mean time to correlation during incidents.
+- Alertmanager routing must be tuned early; defaults can hide signal in blockchain noise.
+
 ## Screenshots
 
 ### Observability Stack
@@ -106,37 +148,6 @@ platform-observability/
 ### Alerts & Routing
 
 ![Alert Routing](screenshots/alert-routing.png)
-
-## Deployment
-
-```bash
-git clone https://github.com/blockmalhotra/platform-observability
-cd platform-observability
-docker compose up
-# Grafana: http://localhost:3000 (admin / admin)
-```
-
-See docs/runbook.md for production k8s patterns.
-
-## Monitoring
-
-- Prometheus scrapes targets via prometheus.yml
-- Grafana unifies metrics, logs (Loki), traces (Tempo)
-- Alertmanager routes alerts from rules
-- Self-monitoring of the stack itself
-
-## Security
-
-- No real credentials in compose (admin default noted for demo only)
-- Volume mounts limit scope
-- See SECURITY.md and docs for RBAC/secrets patterns in k8s
-
-## CI/CD
-
-`.github/workflows/ci.yml`:
-
-- validate: `docker compose config --quiet`
-- build: docker validation build
 
 ## Roadmap
 
@@ -158,11 +169,20 @@ See docs/runbook.md for production k8s patterns.
 - Kubernetes Helm/Operator packaging
 - Production scaling and retention tuning
 
-## Lessons Learned
+## Business Value
 
-- Volume mounts for config (prometheus.yml) and data are essential for reproducible local vs prod parity.
-- Unified Grafana view across metrics/logs/traces dramatically reduces mean time to correlation during incidents.
-- Alertmanager routing must be tuned early; default config hides signal in noise for blockchain workloads.
+Enables early detection of node and service issues through correlated signals. Reduces downtime for validators and RPC by providing unified visibility. Standardizes observability patterns across blockchain infrastructure teams. Supports faster incident response and SLA maintenance.
+
+## Resume Relevance
+
+This repository demonstrates practical experience with:
+
+- Observability Pipelines (metrics, logs, traces)
+- Monitoring & Alerting (Prometheus, Grafana, Loki, Tempo, Alertmanager)
+- Kubernetes Operations (deployment patterns, volume mounts)
+- Infrastructure Standardization (Compose to k8s)
+- Production Troubleshooting (runbooks, self-monitoring)
+- DevOps Tooling (Docker, Compose, CI validation)
 
 ## License
 
@@ -170,4 +190,4 @@ MIT License. See [LICENSE](LICENSE).
 
 ---
 
-**Reference implementation and learning project. Not production deployment.**
+Reference implementation. Evidence from repository code and manifests only.
