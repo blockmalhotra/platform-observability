@@ -80,6 +80,18 @@ graph TD
 - **Monitoring**: Self-scraping + unified Grafana UI across signals + Alertmanager
 - **Deployment flow**: `docker compose up`; k8s manifests or Helm in production
 
+## Key Engineering Decisions
+
+- Volume mounts for prometheus.yml and data dirs keep local dev config identical to production scrape targets (docker-compose.yml and prometheus.yml).
+- Unified Grafana as single pane for metrics (Prom), logs (Loki), traces (Tempo) to speed correlation (compose services).
+- Alertmanager wired last in pipeline to avoid noise until signals are stable.
+
+## Production Considerations
+
+- Default Grafana admin password in compose must be changed via env or secret in real clusters.
+- Retention and scrape intervals in prometheus.yml require tuning for node scale.
+- Loki/Tempo storage backends need persistent volumes in prod (not in demo compose).
+
 ## Technology Stack
 
 - **Metrics**: Prometheus
@@ -169,7 +181,7 @@ See docs/runbook.md for production k8s patterns.
 - Kubernetes Helm/Operator packaging
 - Production scaling and retention tuning
 
-## Business Value
+## Business Impact
 
 Enables early detection of node and service issues through correlated signals. Reduces downtime for validators and RPC by providing unified visibility. Standardizes observability patterns across blockchain infrastructure teams. Supports faster incident response and SLA maintenance.
 
